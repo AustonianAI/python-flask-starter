@@ -1,0 +1,16 @@
+version: "3.11"
+
+services:
+  web:
+    build: .
+    command: flask run --host 0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+
+  worker:
+    build: .
+    command: watchmedo auto-restart -d . -p "*.py" --recursive -- flask run --host 0.0.0.0
+    volumes:
+      - .:/app
